@@ -13,11 +13,22 @@
 
     <div class="options" id="breed">
       <label for="Breed">Breed</label>
-      <select v-if="breeds.length == 1" v-model="breed" class="ui dropdown" name="Breed">
+      <select
+        v-if="breeds.length == 1"
+        v-model="breed"
+        class="ui dropdown"
+        name="Breed"
+      >
         <option value="All">All</option>
       </select>
       <select v-else v-model="breed" class="ui dropdown" name="Breed">
-        <option v-for="(breed, index) in breeds" v-bind:key="index" value="breed">{{breed}}</option>
+        <option
+          v-for="(breed, index) in breeds"
+          v-bind:key="index"
+          value="breed"
+        >
+          {{ breed }}
+        </option>
       </select>
     </div>
 
@@ -29,8 +40,16 @@
         <option value="gif">Animated</option>
       </select>
     </div>
-    <button @click="getPages();" class="btn">Search</button>
-    <button @click="clear();Breeds()" class="btn">Clear</button>
+    <button @click="getPages()" class="btn">Search</button>
+    <button
+      @click="
+        clear();
+        Breeds();
+      "
+      class="btn"
+    >
+      Clear
+    </button>
   </section>
 
   <main>
@@ -43,12 +62,34 @@
     >
       <img :src="photo.url" alt="Dog photos" />
       <div class="back">
-        <h4>ljsjdhsdfkjhk</h4>
+        <h4>{{ photo.name }}</h4>
+        <p>{{ photo.bred_for }}</p>
+        <p>{{ photo.breed_group }}</p>
+        <p>{{ photo.height }}</p>
+        <p>{{ photo.life_span }}</p>
       </div>
     </div>
   </main>
-  <button class="btn" @click="page--; getPages()" v-show="searched && page != 1">Previose Page</button>
-  <button class="btn" @click="page++; getPages()" v-show="searched">Next Page</button>
+  <button
+    class="btn"
+    @click="
+      page--;
+      getPages();
+    "
+    v-show="searched && page != 1"
+  >
+    Previose Page
+  </button>
+  <button
+    class="btn"
+    @click="
+      page++;
+      getPages();
+    "
+    v-show="searched"
+  >
+    Next Page
+  </button>
 </template>
 
 // https://semantic-ui.com/modules/dropdown.html ?
@@ -78,13 +119,39 @@ export default {
   // },
   methods: {
     async getPages() {
-      this.dogs = []
+      this.dogs = [];
       this.searched = false;
-
-      var data = await ApiHelper.getPage(this.page, this.order, this.type);
+      var data;
+      if (this.breed != "All") {
+        data = await ApiHelper.getBreed(this.breed);
+        console.log(data);
+      } else {
+        data = await ApiHelper.getPage(this.page, this.order, this.type);
+      }
       data.forEach((element) => {
-        this.dogs.push({ url: element.url, id: element.id });
-        console.log(element.breeds[0])
+        if (element.breeds[0] == undefined) {
+          this.dogs.push({
+            url: element.url,
+            id: element.id,
+            bred_for: "",
+            breed_group: "",
+            life_span: "",
+            name: "Missing information",
+            temperament: "",
+            height: "",
+          });
+        } else {
+          this.dogs.push({
+            url: element.url,
+            id: element.id,
+            bred_for: element.breeds[0].bred_for,
+            breed_group: element.breeds[0].breed_group,
+            life_span: element.breeds[0].life_span,
+            name: element.breeds[0].name,
+            temperament: element.breeds[0].temperament,
+            height: element.breeds[0].height.metric,
+          });
+        }
       });
 
       this.searched = true;
@@ -103,12 +170,12 @@ export default {
       }
     },
     theorder() {
-      console.log(this.type)
+      console.log(this.type);
     },
     clear() {
-      this.type = "gif,jpg,png"
-      this.order = "RANDOM"
-      this.breed = "All"
+      this.type = "gif,jpg,png";
+      this.order = "RANDOM";
+      this.breed = "All";
     },
     flipAnimation(num) {
       if (this.selected.includes(num)) {
@@ -154,22 +221,21 @@ section {
   #type {
     width: 20vw;
   }
-
 }
 
 .btn {
-    @include btn;
-    background-color: #2c3e50;
-    color: white;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-right: 1rem;
-    height: 50%;
+  @include btn;
+  background-color: #2c3e50;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-right: 1rem;
+  height: 50%;
 
-    &:hover {
-      background-color: #253546;
-    }
+  &:hover {
+    background-color: #253546;
   }
+}
 
 main {
   display: flex;
@@ -184,6 +250,9 @@ main {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
+    &:hover {
+      cursor: pointer;
+    }
 
     img,
     .back {

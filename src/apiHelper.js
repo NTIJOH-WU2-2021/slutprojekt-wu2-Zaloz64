@@ -30,6 +30,12 @@ class ApiHelper {
         return result;
     }
 
+    static async getBreed(breed) {
+        let result = await this.get(`https://api.thecatapi.com/v1/breeds/search?${breed}`);
+        return result;
+    }
+
+
     static async getPage(page, order, type) {
         let result = await this.get(`https://api.thedogapi.com/v1/images/search?limit=15&page=${page}&order=${order}&mime_types=${type}`);
         return result;
