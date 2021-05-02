@@ -13,15 +13,8 @@
 
     <div class="options" id="breed">
       <label for="Breed">Breed</label>
-      <select
-        v-if="breeds.length == 1"
-        v-model="breed"
-        class="ui dropdown"
-        name="Breed"
-      >
+      <select v-model="breed" class="ui dropdown" name="Breed">
         <option value="All">All</option>
-      </select>
-      <select v-else v-model="breed" class="ui dropdown" name="Breed">
         <option
           v-for="(breed, index) in breeds"
           v-bind:key="index"
@@ -52,24 +45,8 @@
     </button>
   </section>
 
-  <main>
-    <div
-      class="imges"
-      v-for="photo in dogs"
-      :key="photo.id"
-      :class="{ active: flipAnimation(photo.id) }"
-      @click="yes(photo.id)"
-    >
-      <img :src="photo.url" alt="Dog photos" />
-      <div class="back">
-        <h4>{{ photo.name }}</h4>
-        <p>{{ photo.bred_for }}</p>
-        <p>{{ photo.breed_group }}</p>
-        <p>{{ photo.height }}</p>
-        <p>{{ photo.life_span }}</p>
-      </div>
-    </div>
-  </main>
+  <Photo-collection :photos="dogs"/>
+
   <button
     class="btn"
     @click="
@@ -96,27 +73,26 @@
 
 <script>
 import ApiHelper from "../apiHelper";
+import PhotoCollection from '../components/PhotoCollection.vue';
+
 
 export default {
+  components: { PhotoCollection },
   name: "Home",
   data() {
     return {
-      breeds: ["All"],
+      breeds: [],
       type: "gif,jpg,png",
       order: "RANDOM",
       breed: "All",
-      selected: [],
       dogs: [],
       searched: false,
       page: 1,
     };
   },
-  // created: {
-  //   async getBreed() {
-  //     this.Breeds()
-  //     console.log(this.Breeds)
-  //   }
-  // },
+  created() {
+    this.Breeds();
+  },
   methods: {
     async getPages() {
       this.dogs = [];
@@ -153,7 +129,6 @@ export default {
           });
         }
       });
-
       this.searched = true;
     },
     async Breeds() {
@@ -162,27 +137,10 @@ export default {
         this.breeds.push(element.name);
       });
     },
-    yes(num) {
-      if (this.selected.includes(num)) {
-        this.selected.splice(this.selected.indexOf(num), 1);
-      } else {
-        this.selected.push(num);
-      }
-    },
-    theorder() {
-      console.log(this.type);
-    },
     clear() {
       this.type = "gif,jpg,png";
       this.order = "RANDOM";
       this.breed = "All";
-    },
-    flipAnimation(num) {
-      if (this.selected.includes(num)) {
-        return true;
-      } else {
-        return false;
-      }
     },
   },
 };
@@ -234,45 +192,6 @@ section {
 
   &:hover {
     background-color: #253546;
-  }
-}
-
-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  perspective: 0px;
-
-  .imges {
-    @include PictureStyle;
-    pointer-events: fill;
-    margin: 2rem 0;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
-    &:hover {
-      cursor: pointer;
-    }
-
-    img,
-    .back {
-      position: relative;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-    }
-
-    .back {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transform: rotateY(180deg);
-    }
-  }
-
-  .active {
-    transform: rotateY(180deg);
   }
 }
 </style>

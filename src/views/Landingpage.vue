@@ -51,7 +51,7 @@ main {
       font-weight: 400;
       font-size: 4rem;
       margin: 0;
-      color: #2c3e50;
+      color: black;
 
     }
 
@@ -62,8 +62,6 @@ main {
     a {
       text-align: center;
       background-color: #2c3e50;
-
-      background-color: rgb(20, 20, 20);
       padding: 1.5rem;
       color: rgb(248, 239, 227);
       font-size: 1.1rem;

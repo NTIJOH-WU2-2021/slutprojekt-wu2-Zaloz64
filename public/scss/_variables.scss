@@ -17,9 +17,10 @@
 @mixin btn {
   padding: 1rem;
   text-decoration: none;
-  color: #2c3e50;
+  color: white;
   font-size: 1.3rem;
   border-style: none;
+  background-color: #2c3e50;
 }
 
 @mixin round-btn {
@@ -32,4 +33,10 @@
   background: #2c3e50;
   color: white;
   cursor: pointer;
+}
+
+@mixin input {
+  background-color: rgb(250, 246, 242);
+  padding: 1rem;
+  border-color: rgb(197, 197, 197);
 }

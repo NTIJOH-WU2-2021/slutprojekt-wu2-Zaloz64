@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Landingpage from "../views/Landingpage.vue";
 import Profile from "../views/Profile.vue";
+import Album from "../views/Album.vue";
 
 
 
@@ -21,6 +22,12 @@ const routes = [
         name: "Landingpage",
         component: Landingpage,
     },
+    {
+        path: "/album/:id",
+        name: "Album",
+        component: Album,
+    }
+    
 ]
 
 const router = createRouter({

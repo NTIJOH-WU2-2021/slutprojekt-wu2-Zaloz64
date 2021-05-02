@@ -13,7 +13,8 @@
     <Collections-form
       v-show="form"
       :edeting="edit"
-      :initialCustomer="collection"
+      :initialCollection="collection"
+      :selected="selected"
       @onSubmit="createCollection"
     />
   </section>
@@ -21,17 +22,18 @@
     <div
       v-for="(col, index) in collections"
       :key="index"
-      @click="collectionEdit(index)"
       class="CollectionContainers"
     >
       <h2>{{ col.name }}</h2>
+      <router-link :to="`/album/${index}`">See album</router-link>
       <button
         @click="
+          collectionEdit(index);
           edit = true;
           form = !form;
         "
       >
-        Redigera
+        <img src="../assets/pen.png" alt="" />
       </button>
     </div>
   </main>
@@ -49,10 +51,11 @@ export default {
       data: "",
       form: false,
       edit: false,
+      selected: undefined,
       collections: [],
       collection: {
-        name: "Name",
-        discription: "Discription",
+        name: "",
+        discription: "",
         pictures: [],
       },
     };
@@ -68,14 +71,10 @@ export default {
       localStorage.setItem("collections", JSON.stringify(collections));
     },
     collectionEdit(id) {
+      this.selected = id;
       const collections = JSON.parse(localStorage.getItem("collections"));
       this.collection = collections[id];
-      console.log(collections[id]);
-    },
-    collectionDelete(id) {
-      const customers = JSON.parse(localStorage.getItem("customers"));
-      customers.splice(id, 1);
-      localStorage.setItem("customers", JSON.stringify(customers));
+      console.log(this.collection);
     },
   },
 };
@@ -85,26 +84,33 @@ export default {
 @import "../../public/scss/_variables.scss";
 
 section {
-    display: flex;
-    align-items: baseline;
-    button {    
-        @include round-btn;
-    }
+  display: flex;
+  align-items: baseline;
+  button {
+    @include round-btn;
+  }
 }
 
-
 main {
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   .CollectionContainers {
     width: 15rem;
-    height: 10rem;
+    height: 11rem;
     margin-bottom: 1rem;
     background: white;
     text-align: center;
+    border-radius: 10px;
+    border: 1px solid #c5c5c5;
     h2 {
       margin-top: 20%;
+      margin-bottom: 2rem
+    }
+    a {
+      @include btn;
+      font-size: 1rem;
     }
 
     button {
@@ -114,7 +120,10 @@ main {
       button {
         display: block;
         @include round-btn;
-
+        img {
+          width: 100%;
+          height: auto;
+        }
       }
     }
   }
