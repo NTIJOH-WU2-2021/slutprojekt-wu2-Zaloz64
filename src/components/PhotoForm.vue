@@ -4,7 +4,7 @@
       <h2>Edit Photo</h2>
       <img src="" alt="" />
       <div class="options" @click="flip = false">
-        <select value="" @change="selected = photo" class="ui dropdown">
+        <select v-model="album" @change="selected = photo" class="ui dropdown">
           <option disabled value="">-- Select an album --</option>
           <option
             v-for="(col, index) in collections"
@@ -54,6 +54,7 @@ export default {
     return {
       collections: [],
       selected: "",
+      album: "",
     };
   },
   created() {

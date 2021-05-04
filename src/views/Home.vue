@@ -18,7 +18,7 @@
         <option
           v-for="(breed, index) in breeds"
           v-bind:key="index"
-          value="breed"
+          :value="breed"
         >
           {{ breed }}
         </option>
@@ -45,7 +45,7 @@
     </button>
   </section>
 
-  <Photo-collection :photos="dogs"/>
+  <Photo-collection :photos="dogs" />
 
   <button
     class="btn"
@@ -73,8 +73,7 @@
 
 <script>
 import ApiHelper from "../apiHelper";
-import PhotoCollection from '../components/PhotoCollection.vue';
-
+import PhotoCollection from "../components/PhotoCollection.vue";
 
 export default {
   components: { PhotoCollection },
@@ -100,7 +99,7 @@ export default {
       var data;
       if (this.breed != "All") {
         data = await ApiHelper.getBreed(this.breed);
-        console.log(data);
+        console.log(data)
       } else {
         data = await ApiHelper.getPage(this.page, this.order, this.type);
       }
@@ -131,7 +130,7 @@ export default {
       });
       this.searched = true;
     },
-    async Breeds() {
+      async Breeds() {
       var data = await ApiHelper.getAllBreeds();
       data.forEach((element) => {
         this.breeds.push(element.name);

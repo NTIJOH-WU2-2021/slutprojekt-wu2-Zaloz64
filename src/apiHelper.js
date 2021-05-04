@@ -5,7 +5,6 @@ class ApiHelper {
             method: "GET",
             headers: {
                 'x-api-key': 'ff99bb28-97c1-4dc7-94e0-6eceba4ec026',
-                //  'Accept': 'application/json',
             },
         });
 
@@ -15,26 +14,21 @@ class ApiHelper {
         else { console.log(result.status) }
     }
 
-    // Page & order, amount?
-    // breed
-    // type all or nothing
-    // static mime_types=jpg,png
-    // animated mime_types=gif
-
-    // static async getBreed(breed_id) {
-
-    // }
-
     static async getAllBreeds() {
         let result = await this.get("https://api.thedogapi.com/v1/breeds");
         return result;
     }
 
     static async getBreed(breed) {
-        let result = await this.get(`https://api.thecatapi.com/v1/breeds/search?${breed}`);
+        let dogs = await this.get(`https://api.thedogapi.com/v1/breeds/search?q=${breed}`);
+        var result = [];
+        dogs.forEach(element => {
+            
+            let temp = this.get(`https://api.thedogapi.com/v1/images/${element.reference_image_id}`)
+            result.push(temp)
+        });
         return result;
     }
-
 
     static async getPage(page, order, type) {
         let result = await this.get(`https://api.thedogapi.com/v1/images/search?limit=15&page=${page}&order=${order}&mime_types=${type}`);
