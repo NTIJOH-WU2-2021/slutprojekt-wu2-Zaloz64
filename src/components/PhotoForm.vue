@@ -4,7 +4,7 @@
       <h2>Edit Photo</h2>
       <img src="" alt="" />
       <div class="options" @click="flip = false">
-        <select value=""  @change="selected = photo" class="ui dropdown">
+        <select value="" @change="selected = photo" class="ui dropdown">
           <option disabled value="">-- Select an album --</option>
           <option
             v-for="(col, index) in collections"
@@ -62,13 +62,17 @@ export default {
   methods: {
     inserIntoAlbum(photo) {
       var collection = this.collections[this.album];
-    if (collection.pictures == undefined) {
-        collection.pictures = [photo];
-    }
-    else {
-      collection.pictures.push(photo);
-    }
-      this.collections[this.album] = collection;
+      if (collection.pictures) {
+        collection.pictures.push(photo);
+        this.collections[this.album] = collection;
+      } else {
+          var newCollection = {
+          name: collection.name,
+          discription: collection.discription,
+          pictures: [photo]
+        }
+        this.collections[this.album] = newCollection;
+      }
       localStorage.setItem("collections", JSON.stringify(this.collections));
       this.album = "";
     },
@@ -89,12 +93,11 @@ export default {
 <style lang="scss" scoped>
 @import "../../public/scss/_variables.scss";
 
-
 section {
   position: absolute;
   margin: 0;
   left: 0;
-    right: 0;
+  right: 0;
 
   form {
     position: fixed;
@@ -105,20 +108,20 @@ section {
     border-radius: 20px;
     padding: 1rem;
     button {
-        @include btn;
-        margin: 1rem 1rem 0 0;
-        // margin-right: 1rem;
+      @include btn;
+      margin: 1rem 1rem 0 0;
+      // margin-right: 1rem;
     }
 
     h2 {
-          font-weight: 400;
-          margin: 1rem 0 0 0;
+      font-weight: 400;
+      margin: 1rem 0 0 0;
     }
 
     select {
-        @include input;
-        background: white;
-        width: 100%;
+      @include input;
+      background: white;
+      width: 100%;
     }
   }
 }
