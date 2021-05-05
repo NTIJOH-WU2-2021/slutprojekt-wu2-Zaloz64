@@ -7,7 +7,6 @@ class ApiHelper {
                 'x-api-key': 'ff99bb28-97c1-4dc7-94e0-6eceba4ec026',
             },
         });
-
         if (result.ok) {
             return result.json();
         }
@@ -21,12 +20,13 @@ class ApiHelper {
 
     static async getBreed(breed) {
         let dogs = await this.get(`https://api.thedogapi.com/v1/breeds/search?q=${breed}`);
+        console.log(dogs.length)
         var result = [];
-        dogs.forEach(element => {
-            
-            let temp = this.get(`https://api.thedogapi.com/v1/images/${element.reference_image_id}`)
+        for (let idx = 0; idx < dogs.length; idx++) {
+            const element = dogs[idx];
+            let temp = await this.get(`https://api.thedogapi.com/v1/images/${element.reference_image_id}`)
             result.push(temp)
-        });
+        }
         return result;
     }
 

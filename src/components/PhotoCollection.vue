@@ -1,5 +1,10 @@
 <template>
-  <Photo-form :photo="editFoto" :inAlbum="inAlbum" :photoIdx="editFotoIdx" v-show="edit == true" />
+  <Photo-form
+    :photo="editFoto"
+    :inAlbum="inAlbum"
+    :photoIdx="editFotoIdx"
+    v-show="edit == true"
+  />
 
   <main>
     <div
@@ -9,20 +14,19 @@
       :class="{ active: flipAnimation(photo.id) }"
       @click="updateSelected(photo.id)"
     >
-          <img :src="photo.url" alt="Dog photos" />
-
+      <img :src="photo.url" alt="Dog photos" />
       <button
         @click="
           editFoto = photo;
           edit = true;
           editFotoIdx = index;
         "
-      >
-        +
-      </button>
+      >+</button>
       <div class="back">
         <h2>{{ photo.name }}</h2>
-        <p v-show="photo.bred_for != undefined">Breed for: {{ photo.bred_for }}</p>
+        <p v-show="photo.bred_for != undefined">
+          Breed for: {{ photo.bred_for }}
+        </p>
         <p>Breed group: {{ photo.breed_group }}</p>
         <p>Height: {{ photo.height }}</p>
         <p>Life span: {{ photo.life_span }}</p>
@@ -61,10 +65,12 @@ export default {
       }
     },
     updateSelected(num) {
-      if (this.selected.includes(num)) {
-        this.selected.splice(this.selected.indexOf(num), 1);
-      } else {
-        this.selected.push(num);
+      if (!this.edit) {
+        if (this.selected.includes(num)) {
+          this.selected.splice(this.selected.indexOf(num), 1);
+        } else {
+          this.selected.push(num);
+        }
       }
     },
   },
@@ -94,16 +100,18 @@ main {
     &:hover {
       cursor: pointer;
       button {
-        display: block;
-        @include round-btn;
+        display: flex;
         align-self: center;
-        margin: 1rem;
+        position: absolute;
+        bottom: -1rem;
+        padding: 0.5rem 0.7rem;
+        border-radius: 100%;
+        border-style: none;
+        background: #2c3e50;
+        color: white;
+        cursor: pointer;
       }
     }
-    // .options {
-    //     z-index: 1;
-    // }
-
     img,
     .back {
       position: relative;
@@ -119,17 +127,16 @@ main {
       height: 100%;
       transform: rotateY(180deg);
       h2 {
-          margin: 1rem;
-            font-weight: 400;
+        margin: 1rem;
+        font-weight: 400;
       }
       p {
-          margin: 0 1rem;
+        margin: 0 1rem;
       }
     }
 
-
     button {
-        display: none;
+      display: none;
     }
   }
 

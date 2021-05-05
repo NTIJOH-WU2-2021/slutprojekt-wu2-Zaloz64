@@ -36,6 +36,7 @@
 }
 
 @mixin input {
+  border-width: 1px;
   background-color: rgb(250, 246, 242);
   padding: 1rem;
   border-color: rgb(197, 197, 197);

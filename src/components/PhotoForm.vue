@@ -1,7 +1,8 @@
 <template>
   <section>
     <form class="pure-form">
-      <h2>Edit Photo</h2>
+      <h2 v-show="!inAlbum">Add Photo</h2>
+      <h2 v-show="inAlbum">Edit Photo</h2>
       <img src="" alt="" />
       <div class="options" @click="flip = false">
         <select v-model="album" @change="selected = photo" class="ui dropdown">
@@ -95,10 +96,9 @@ export default {
 @import "../../public/scss/_variables.scss";
 
 section {
-  position: absolute;
-  margin: 0;
-  left: 0;
-  right: 0;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 
   form {
     position: fixed;
@@ -107,7 +107,8 @@ section {
     width: 18vw;
     height: auto;
     border-radius: 20px;
-    padding: 1rem;
+    padding: 3rem;
+    box-shadow: 0 0 0 100vw rgba(0, 0, 0, 0.493);
     button {
       @include btn;
       margin: 1rem 1rem 0 0;
