@@ -1,0 +1,11 @@
+lektion 1
+Jag fixade allt jah behövde för att starta arbetet som att ladda ner routes och scss för projektet samt konfigurera dem. Att fixa routesen gick snabbt då jag hade redan installerat det i ett eget personligt project innan. Men att sedan få scss ett fungera tog sin tid då jag laddade ner fel verision så jag fick avinstallera och ladda ner på nytt igen efter råd på stackoverflow. Seddan skapade jag de tre sidorna som jag kommer behöva som är landing page, collection och användarens favoriter.
+
+lektion 2
+Denna lektion jobbade jag på att få apit att fungera så att jag kan använda den till sidan. Det tog lite tid att få det fungera att hämta datan igenom js då jag inte hat gjort det innan med js.
+
+lektion 3
+Idag jobbade jag med APIt samt sökningen på hemsidan så att användaren ska kunna kolla på olika hundar. Användaren kan välja bland flera olika alternativ på sidan för att sortera vilka hundar dem vill se. Det finns utefter orning (random, stigande ordning eller fallande ordning), hundras och typ av bild (animerad, statisk eller båda). Användaren kan även bläddra mellan flera sidor. Det jag gjorde för att få datan från apit mer dynamiskt var att strängintepolera in de olika vilkoren som ordning, type och sida. Det som var svårt var att få alla hundraser att ittereras ut under select och kunna selecta en. Den tar endast den första även om jag väljer en annan. Det beror förmodligen på att jag hämtar datan när jag trycker på den och då hämtar den igen efter att jag har valt den. Det jag egentligen behöver göra är att hämta datan när sidan laddas in eller liknande men är inte hundra på hur man ska göra det i vue. Så detta blir uppdraget att göra nästa lektion eller hemma innan lektionen. 
+
+
+

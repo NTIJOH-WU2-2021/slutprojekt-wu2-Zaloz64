@@ -1,0 +1,43 @@
+@mixin PictureStyle {
+  // margin: 2rem;
+  padding: 1rem;
+  width: 13rem;
+  height: 18rem;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  img {
+    width: 100%;
+    max-height: 80%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+@mixin btn {
+  padding: 1rem;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+  border-style: none;
+  background-color: #2c3e50;
+}
+
+@mixin round-btn {
+  margin: 0 1rem;
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  border-radius: 100%;
+  border-style: none;
+  background: #2c3e50;
+  color: white;
+  cursor: pointer;
+}
+
+@mixin input {
+  border-width: 1px;
+  background-color: rgb(250, 246, 242);
+  padding: 1rem;
+  border-color: rgb(197, 197, 197);
+}
